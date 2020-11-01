@@ -51,7 +51,9 @@ class App extends React.Component<AppState,AppState> {
     };
     
     getOrderBooks() : void {
-      const url = "/public/getorderbook"
+      // const url = "/public/getorderbook"
+//   "proxy": "https://api.bittrex.com/api/v1.1",
+      const url =  "https://api.bittrex.com/api/v1.1" + "/public/getorderbook"
       let params : AxiosRequestConfig = {
         headers: {
           crossdomain: true,
