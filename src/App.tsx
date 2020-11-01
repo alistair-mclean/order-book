@@ -30,7 +30,7 @@ class App extends React.Component<AppState,AppState> {
     handleResponse = (response: AxiosResponse) => {
         const responseData: ResponseStruct = response.data ;
         let books = new Array<OrderBookState>();
-        if (responseData.success) {
+        if (responseData && responseData.success) {
           let props1 = {
             transactionType: "buy",
             data: responseData.result.buy,
@@ -48,6 +48,7 @@ class App extends React.Component<AppState,AppState> {
           });
         }
         else {
+          console.log("Failed.")
           console.log(responseData)
         }
         console.log("this.state: ", this.state);
