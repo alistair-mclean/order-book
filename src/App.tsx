@@ -2,26 +2,24 @@ import React from 'react';
 // import logo from './logo.svg';
 import axios from 'axios';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
-import OrderBook  from './Orderbook/Orderbook';
-// import OrderBookState from './Orderbook/Orderbook';
+import {renderOrderBook, MarketOrder, OrderBookState} from './Orderbook/Orderbook';
 import './App.css';
 
-// const ENDPOINT = "https://api.bittrex.com/api/v1.1";
 
 interface ResponseStruct {
   success : boolean,
   result: {
-    buy: Array<{quantity: number, rate: number}>,
-    sell: Array<{quantity: number, rate: number}>,
+    buy: Array<MarketOrder>,
+    sell: Array<MarketOrder>,
   },
   message: string,
 }
 
 interface AppState {
-  books: Array<OrderBook>
+  books: Array<OrderBookState>
 }
 
-class App extends React.Component<{},AppState> {
+class App extends React.Component<AppState,AppState> {
     constructor(props:AppState){
       super(props)
       this.getOrderBooks = this.getOrderBooks.bind(this);
@@ -30,29 +28,27 @@ class App extends React.Component<{},AppState> {
         books: props.books
       }
     }
-    
-    handleResponse = (response: AxiosResponse): ResponseStruct => {
+    handleResponse = (response: AxiosResponse) => {
         const responseData: ResponseStruct = response.data ;
-        let books = new Array<OrderBook>();
+        let books = new Array<OrderBookState>();
         if (responseData.success) {
-          let props = {
+          let props1 = {
             transactionType: "buy",
             data: responseData.result.buy,
           }
-          const book1 = new OrderBook(props);
-          props = {
+          books.push(props1);
+          
+          const props2 = {
             transactionType: "sell",
             data: responseData.result.sell,
           }
-          const book2 = new OrderBook(props);
-          books.push(book1)
-          books.push(book2)
+          books.push(props2);
+          
           this.setState({
-            books: books
-          })
+            books: books,
+          });
         }
         console.log("this.state: ", this.state);
-        return responseData
     };
     
     getOrderBooks() : void {
@@ -72,20 +68,26 @@ class App extends React.Component<{},AppState> {
     }
 
     render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <p>
-            <button onClick={this.getOrderBooks}>Get Bittrex order book</button>
-          </p>
-          <div> 
-            <h1>Market: BTC-ETH</h1>
-            {this.state.books}
-          </div>
-        </header>
-      </div>
-    );
-}
+      
+      let display = <p>Orderbooks have not yet been retrieved.</p>;
+      if (this.state.books) {
+        const props = this.state.books[0];
+        display = renderOrderBook(props)
+      } 
+      return (
+        <div className="App">
+          <header className="App-header">
+            <p>
+              <button onClick={this.getOrderBooks}>Get Bittrex order book</button>
+            </p>
+            <div> 
+              <h1>Market: BTC-ETH</h1>
+              {display}
+            </div>
+          </header>
+        </div>
+      );
+  }
 }
 
 export default App;

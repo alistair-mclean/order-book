@@ -2,21 +2,28 @@ import React from 'react';
 import { HotTable } from '@handsontable/react';
 
 const licenseKey='non-commercial-and-evaluation';
-// A MarketOrder represents a market order in an 
-// orderbook. 
-// type - The type of order (buy or sell).
-// quantity - 
-type MarketOrder =  {
+
+export type MarketOrder =  {
     quantity: number,
     rate: number
 }
 
-type OrderBookState = {
+export type OrderBookState = {
     transactionType: string,
     data: Array<String | MarketOrder>,
 }
 
-class OrderBook extends React.Component<{}, OrderBookState> {
+export function renderOrderBook(props: OrderBookState) : any {
+    
+    return (
+        <OrderBook 
+            transactionType={props.transactionType} 
+            data={props.data}
+        />
+    )
+}
+
+class OrderBook extends React.Component<OrderBookState, OrderBookState> {
     constructor(props: OrderBookState | any) {
         super(props);
         this.state = {
@@ -29,7 +36,6 @@ class OrderBook extends React.Component<{}, OrderBookState> {
         const settings = {
             data: this.state.data,
             licenseKey: licenseKey,
-
         }
         return (
             <div>
