@@ -49,6 +49,12 @@ class App extends React.Component<AppState,AppState> {
         }
         else {
           console.log("Failed.")
+          if (!responseData) {
+            console.log("No response data.")
+          } else {
+            console.log("Response data.success: ",responseData.success)
+            console.log("Response data.message: ",responseData.message)
+          }
           console.log(responseData)
         }
         console.log("this.state: ", this.state);
