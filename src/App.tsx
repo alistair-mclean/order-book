@@ -47,6 +47,9 @@ class App extends React.Component<AppState,AppState> {
             books: books,
           });
         }
+        else {
+          console.log(responseData)
+        }
         console.log("this.state: ", this.state);
     };
     
