@@ -7,7 +7,6 @@ const licenseKey='non-commercial-and-evaluation';
 // type - The type of order (buy or sell).
 // quantity - 
 type MarketOrder =  {
-    // type: string,
     quantity: number,
     rate: number
 }
