@@ -2,6 +2,7 @@
   "name": "order-book",
   "version": "0.1.0",
   "private": true,
+  "proxy": "https://api.bittrex.com/api/v1.1",
   "dependencies": {
     "@handsontable/react": "^4.0.0",
     "@testing-library/jest-dom": "^5.11.4",
