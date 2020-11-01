@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import {renderOrderBook, MarketOrder, OrderBookState} from './Orderbook/Orderbook';
+import CombinedOrderBook from './Orderbook/CombinedOrderBook'; 
 import './App.css';
 
 
@@ -57,7 +58,7 @@ class App extends React.Component<AppState,AppState> {
           }
           console.log(responseData)
         }
-        console.log("this.state: ", this.state);
+        // console.log("this.state: ", this.state);
     };
     
     getOrderBooks() : void {
@@ -80,9 +81,11 @@ class App extends React.Component<AppState,AppState> {
       
       let display = <p>Orderbooks have not yet been retrieved.</p>;
       if (this.state.books && this.state.books.length > 0) {
-        const props1 = this.state.books[0];
-        const props2 = this.state.books[1];
-        display = <div>{renderOrderBook(props1)}<br></br>{renderOrderBook(props2)}</div>
+        display = <CombinedOrderBook 
+                    buy={this.state.books[0]} 
+                    sell={this.state.books[1]} 
+                    exchange={"Bittrex"} 
+                  />;
       } 
       return (
         <div className="App">

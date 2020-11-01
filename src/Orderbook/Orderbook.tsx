@@ -42,7 +42,12 @@ class OrderBook extends React.Component<OrderBookState, OrderBookState> {
         }
         return (
             <div>
-                <HotTable settings={settings} width="600" height="300"  />
+                <HotTable 
+                    settings={settings}
+                    colHeaders={["Quantity", "Rate"]}
+                    width="100%" 
+                    height="300"  
+                />
             </div>
         )
     }
