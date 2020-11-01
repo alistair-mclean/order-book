@@ -1,5 +1,4 @@
 import React from 'react';
-// import logo from './logo.svg';
 import axios from 'axios';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import {renderOrderBook, MarketOrder, OrderBookState} from './Orderbook/Orderbook';
@@ -70,18 +69,17 @@ class App extends React.Component<AppState,AppState> {
     render() {
       
       let display = <p>Orderbooks have not yet been retrieved.</p>;
-      if (this.state.books) {
-        const props = this.state.books[0];
-        display = renderOrderBook(props)
+      if (this.state.books && this.state.books.length > 0) {
+        const props1 = this.state.books[0];
+        const props2 = this.state.books[1];
+        display = <div>{renderOrderBook(props1)}<br></br>{renderOrderBook(props2)}</div>
       } 
       return (
         <div className="App">
           <header className="App-header">
-            <p>
-              <button onClick={this.getOrderBooks}>Get Bittrex order book</button>
-            </p>
             <div> 
               <h1>Market: BTC-ETH</h1>
+              <button onClick={this.getOrderBooks}>Get Bittrex order book</button>
               {display}
             </div>
           </header>

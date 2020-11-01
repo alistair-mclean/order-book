@@ -14,21 +14,24 @@ export type OrderBookState = {
 }
 
 export function renderOrderBook(props: OrderBookState) : any {
-    
-    return (
-        <OrderBook 
-            transactionType={props.transactionType} 
-            data={props.data}
-        />
-    )
+    if (props) {
+        return (
+            <OrderBook 
+                transactionType={props.transactionType} 
+                data={props.data}
+            />
+     )
+    }
 }
 
 class OrderBook extends React.Component<OrderBookState, OrderBookState> {
     constructor(props: OrderBookState | any) {
         super(props);
-        this.state = {
-            transactionType: props.transactionType,
-            data: props.data,
+        if (props) {
+            this.state = {
+                transactionType: props.transactionType,
+                data: props.data,
+            }
         }
     };
     
